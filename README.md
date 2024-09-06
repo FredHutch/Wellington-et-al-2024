@@ -1,6 +1,6 @@
-# Template repository for Hadland Lab Github team
+# Wellington et al. 2024
 
-### Once a new repository is created, please revise this README file based on project need.
+# THIS IS UNDER CONSTRUCTION. WILL BE UPDATED WITH ALL CODE SOON.
 
 ### IMPORTANT: When creating a new repository using this template, one of the first things to do is create a "processed_data" folder within the project directory.
 
