@@ -1,47 +1,41 @@
 # Wellington et al. 2024
 
-# THIS IS UNDER CONSTRUCTION. WILL BE UPDATED WITH ALL CODE SOON.
-
-### IMPORTANT: When creating a new repository using this template, one of the first things to do is create a "processed_data" folder within the project directory.
-
 ## Description
-
-This is a template that can be used to create a repository for a new computational analysis project by the Hadland Lab. Below is an example of the data structure and an explanation of the components:
-
-![Alt text](example_structure.png)
-
-### results:
-- contains raw scripts and data generated from each experiment/analysis in the project
-- labarchives_path.txt lists where the project notebook can be found in the Hadland Lab notebook collection on Lab Archives
-- experiment directories are formatted by date and can include a one word descriptor if desired
-- each experiment directory should contain a brief summary.txt file, _runall script that contains the code and any data/results (i.e. graphs, tables, lists, etc.) that were created
-- additional organizational logic and subdirectories within an experiment directory can be used at the discretion of the authors
+This is the code that was used for the data analysis carried out in Wellington et al. 2024.
 
 ### cellranger:
-- contains scripts for [cellranger](https://support.10xgenomics.com/single-cell-gene-expression/software/overview/welcome) processing of raw fastq data
-- run_cellranger.sh is a template script for running the "cellranger count" function on the Fred Hutch servers using sbatch
-- all names/options that begin with "CHANGE-" in the template script need to be modified for the specific project
-  - **NOTE:** demultiplexing via a custom script or "cellranger mkfastq" needs to be done first, this is typically done by core staff when sequencing with the Hutch Genomics Core
+- contains scripts for [cellranger](https://support.10xgenomics.com/single-cell-gene-expression/software/overview/welcome) processing of raw fastq data for Zeng et al. CS10, CS11 and CS13 and 10X iPS Day 8 datasets
+- Crosse et al. fastq processing was done on the 10X cloud and did not require an input script
+- Calvanese et al. provided csv files containing raw counts, which were used for analysis
+- sci-RNA-seq data was returned by the Brotman Baty Institute as a cell_data_set object post-cellranger
 
-### monocle:
-- contains the compiled/finalized scripts for all [monocle3](https://cole-trapnell-lab.github.io/monocle3/) analyses performed in the project
-- monocle_preprocess.R is a template script for processing cellranger output data into a useable cds file for downstream analysis
-- additional scripts can be added for each experiment as they are finalized
+### figure-01_supp-figure-01_sciRNAseq:
+- contains the finalized code for the analysis of sci-RNA-seq data as associated with the generation of figure panels in Figure 1 and Figure S1
+- sci_endo_hemato_scoring: the code used to identify endothelial and hematopoeitic populations in Figure 1D and Figure S1F
+- sci_hemato_related_table: the code used to generate Figure S1E
+- sci_preprocessing: the code used for preprocessing the sci-RNA-seq data recieved from the Brotman Baty Institute
+- sci_Xu-et-al_marker_scoring: the code used for Figure 1B and Figure S1A-B,C
 
-### processed_data:
-- contains the intermediate data files used during project analyses (i.e. rds files created by monocle preprocess script)
-  - **NOTE:** this directory is already part of the .gitignore file and will not be tracked or uploaded to a remote repository due to potential large files stored here, it is present for ease of use when working on a local machine
+### figure-02_supp-figure-02_iPS-10X:
+- contains the finalized code for the analysis of 10X iPS Day 8 data as associated with the generation of figure panels in Figure 2 and Figure S2
+- iPS_10X_26a-v-26b_HSC-genes: the code used to generate Figure 2G
+- iPS_10X_marker_scoring: the code used to generate Figure 2D-F
+- iPS_10X_preprocessing: the code used for preprocessing the 10X iPS Day 8 data after cellranger
 
-## Additional Notes
+### figure-03_supp-figure-03_integration
+- contains the finalized code for the integration of 10X iPS Day 8 data with Zeng et al. 2019, Crosse et al. 2020, and Calvanese et al. 2022 10X Human Embyro datasets as associated with the generation of figure panels in Figure 3 and Figure S3
+- iPS_Human-Embryo_Label-Transfer: the code used to generate Figure 3D-M and Figure S3A-R
+- iPS_Human-Embryo_Preprocessing_Integration: the code used to integrate iPS Day 8 10X data with Zeng et al. 2019, Crosse et al. 2020, and Calvanese et al. 2022 10X Human Embyro datasets
+- iPS_Human-Embryo_Seurat_to_Monocle_Conversion: the code used to convert the integrated Seurat object to a Monocle 3 object for use in label transfer, differential expression analysis, etc.
 
-This is a template repo, thus the codes, workflow and data structure are subject to change based on lab experience and individual user needs.
+### figure-04_supp-figure-04_integration_DEA
+- contains the finalized code for the differential expression analysis of 10X iPS Day 8 and HSC-Competent Human Embryo data as associated with the generation of figure panels in Figure 4 and Figure S4
+- GO-Term-Aggregate-Gene-Scores_AE_HE_HSPC: the code used to generate Figure S4G-J
+- iPS_Human-Embryo_AE_HE_HSPC_DEA: the code used for differential expression analysis comparing AE-HE or HE-HSPC for both iPS and HSC-Competent Human Embryo 
+- iPS_v_HSC-competent-Human-Embryo: the code used for differential expression analysis comparing iPS and HSC-Competent Human Embryo HE, Early HSPCs or EHT (HE and Early HSPCs)
+- Metascape_FDR_Plots: the code used to generate Figure 4B,C,E,F,H,I and Figure S4B,C,E,F
 
-Repositories will begin as private and organized in this structure. Following manuscript submission/acceptance, they will be reorganized (potentially cloned and then reorganized) to suit the structure of the paper and then made publicly available.
-
-The default permissions for repositories created from this template will give the creator and Brandon admin access and the Hadland Lab Github team write access.
-
-Utilize branches when multiple people are working on a project simultaneously.
-
-Local commits are recommended daily, or each time work is done on an experiment, to optimize tracking control. Pushes to a remote repository/branch can be done on a more intermittent basis at user discretion.
-
-Questions, comments and suggestions about creating/using Github repos can be sent to Brandon, Adam or Rachel.
+### figure-05_supp-figure-05_nichenetr
+- contains the finalized code for the [NicheNetR](https://github.com/saeyslab/nichenetr) ligand-receptor analysis associated with the HE and EHT (HE and Early HSPCs) differential expression profiles from Figure 4 associated with the generation of figure panels in Figure 5 and Figure S5
+- NicheNetR_circos-plots_ligand-activity-tables_ligand-DEG-heatmaps: the code used to generate Figure 5A,B and Figure S5A-D
+- NicheNetR_iPS_v_HSC-competent-Human-Embryo: the code used to run NicheNetR on the integrated data for HE or EHT (HE and Early HSPCs), comparing iPS Day 8 to HSC-Competent Human Embryos
