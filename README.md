@@ -3,7 +3,7 @@
 ## Description
 This is the code that was used for the data analysis carried out in the Wellington et al. 2024 paper, "Developmental regulation of endothelial-to-hematopoietic transition from iPSCs".
 
-Associated input files for the code can be found in this [google drive](https://drive.google.com/drive/folders/154wYpNe8G2jP0YeaFASthEk0h4uEw_ck?usp=sharing) at the listed path.
+Associated input files for the code can be found in this [google drive](https://drive.google.com/drive/folders/154wYpNe8G2jP0YeaFASthEk0h4uEw_ck?usp=sharing) at the listed path within the code.
 
 ### cellranger:
 - contains scripts for [cellranger](https://support.10xgenomics.com/single-cell-gene-expression/software/overview/welcome) processing of raw fastq data for Zeng et al. CS10, CS11 and CS13 and 10X iPS Day 8 datasets
