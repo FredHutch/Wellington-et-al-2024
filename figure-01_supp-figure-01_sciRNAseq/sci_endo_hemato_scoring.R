@@ -8,11 +8,9 @@ library(ggplot2)
 library(RColorBrewer)
 library(patchwork)
 
-#Load the preprocessed RDS file from github
-#cds <- getURL("https://raw.github.com/...")
-#cds <- readRDS(text = cds)
-cds <- readRDS("~/sci_cds_BBI_preprocessed.RDS")
-save_dir <- "~/save_dir/" #set by user
+#Load the preprocessed RDS file from Google Drive
+cds <- readRDS("~/RDS_objects/sci_cds_BBI_preprocessed.RDS")
+save_dir <- "~/save_dir/" #set by individual user
 
 #set up simple_theme for plotting
 simple_theme <-  theme(axis.title.x = element_blank(),
@@ -27,7 +25,7 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                                                    linewidth = 2, 
                                                    fill = NA)) 
 
-#function for aggregate gene scoring for marker sets
+#function for aggregate gene scoring for a marker set
 gene_group_scoring <- function(cds, gene_group, column_name) {
   cds_gene_group <- cds[fData(cds)$gene_short_name %in% gene_group,]
   aggregate_expression <- exprs(cds_gene_group)
@@ -59,7 +57,7 @@ ggsave(hemato_score,
        height = 4)
 
 #Endothelial signature (RUNX1, CD34, CDH5)
-endo_markers <- c("CDH5", "KDR", "TIE1", "CD34", "RUNX1") #These are Calvanese Fig 1 Endo genes + CD34 + RUNX1
+endo_markers <- c("CDH5", "KDR", "TIE1", "CD34") #These are Calvanese Fig 1 Endo genes + CD34
 cds <- gene_group_scoring(cds, endo_markers, column_name = "endo_score")
 endo_not_hemato_scores <- c()
 for (x in 1:nrow(colData(cds))) {
@@ -108,8 +106,8 @@ he_or_hemato_plt <- plot_cells(cds,
   simple_theme
 
 #Label cell type calls in individual plots for each day of differentiation
-d7 <- cds[,colData(cds)$time.point %in% c("Day 7")]
-d8 <- cds[,colData(cds)$time.point %in% c("Day 8")]
+d7 <- cds[,colData(cds)$time.point %in% c("Day 07")]
+d8 <- cds[,colData(cds)$time.point %in% c("Day 08")]
 d11 <- cds[,colData(cds)$time.point %in% c("Day 11")]
 d14 <- cds[,colData(cds)$time.point %in% c("Day 14")]
 d18 <- cds[,colData(cds)$time.point %in% c("Day 18")]
@@ -170,8 +168,7 @@ combo_plt <- d7_plt +
   d11_plt + 
   d14_plt + 
   d18_plt + 
-  d21_plt + 
-  plot_layout(ncol = 6)
+  plot_layout(ncol = 5)
 
 ggsave(plot = combo_plt, 
        filename = paste0(save_dir, "days_separate_colored_by_endo_hemato.png"), 
@@ -182,8 +179,8 @@ ggsave(plot = combo_plt,
 #For hematopoietic-related cell populations only
 cds_hemato_only <- readRDS("~/sci_cds_BBI_preprocessed_hemato-only.RDS")
 
-d7 <- cds[,colData(cds)$time.point %in% c("Day 7") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
-d8 <- cds[,colData(cds)$time.point %in% c("Day 8") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
+d7 <- cds[,colData(cds)$time.point %in% c("Day 07") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
+d8 <- cds[,colData(cds)$time.point %in% c("Day 08") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
 d11 <- cds[,colData(cds)$time.point %in% c("Day 11") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
 d14 <- cds[,colData(cds)$time.point %in% c("Day 14") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
 d18 <- cds[,colData(cds)$time.point %in% c("Day 18") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
