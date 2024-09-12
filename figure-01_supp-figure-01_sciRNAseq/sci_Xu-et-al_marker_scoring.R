@@ -21,12 +21,8 @@ library(pals)
 library(svglite)
 library(cowplot)
 
-#Load the preprocessed RDS file from github
-#cds <- getURL("https://raw.github.com/...")
-#cds <- readRDS(text = cds)
-cds <- r"(C:\Users\rachw\Documents\GitHub\code_wellington_etal2024_EBprofiling\objects\sci_cds_BBI_preprocessed.RDS)"
-cds <- gsub("\\\\", "/", cds)
-cds <- readRDS(cds)
+#Load the preprocessed RDS file from Google Drive
+cds <- readRDS("~/RDS_objects/sci_cds_BBI_preprocessed.RDS")
 
 #Add cluster numbers as a metdata column
 colData(cds)$cluster <- clusters(cds)
@@ -113,7 +109,7 @@ avg_score_matrix <- function(cds, cell_group, scores){
 }
 
 #Create heatmap of scores
-score_names <- colnames(colData(cds))[-c(1:17,36)]
+score_names <- colnames(colData(cds))[c(17:length(colnames(colData(cds))))]
 mat_sci_scores <- avg_score_matrix(cds = cds,
                                    cell_group = "cluster",
                                    scores = score_names)
@@ -199,12 +195,12 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                                                    fill = NA)) 
 
 plt <- plot_cells(cds, 
-                  color_cells_by = "cell_type",
+                  color_cells_by = "s1a_cell_type",
                   show_trajectory_graph = FALSE,
                   group_label_size = 4,
                   rasterize = TRUE) + 
   simple_theme +
-  scale_color_manual(values = as.vector(stepped(length(unique(colData(cds)$cell_type)))))
+  scale_color_manual(values = as.vector(stepped(n=length(unique(colData(cds)$s1a_cell_type)))))
 
 save_dir <- "~/save_dir/" #different for each user
 ggsave(plt, filename = paste0(save_dir, "XuFigS1A_cell-types.png"),
@@ -215,7 +211,8 @@ ggsave(plt, filename = paste0(save_dir, "XuFigS1A_cell-types.png"),
 #Markers are from supplemental table S1B from Xu, Y., et al. 2023. Nat Cell Biol.
 #"A Single Cell Transcriptome Atlas Profiles Early Organogenesis in Human Embyros"
 
-s1b_labels <- read.csv("~/path_to_csv.csv", header = TRUE)
+s1b_labels <- read.csv("~/RDS_objects/Xu_etal_2023_FigureS1B_cell-type-markers.csv", 
+                       header = TRUE)
 s1b_labels_df <- data.frame(s1b_labels)
 s1b_labels_df <- s1b_labels_df %>% select(annotation, marker_genes_in_literature)
 
@@ -242,12 +239,13 @@ save_dir <- "~/save_dir/" #different for each user
 heatmap_save_dir <- "~/save_dir/" #different for each user
 
 #calculate marker set score for each cluster for each potential cell type
+current_new_col <- length(colnames(colData(cds))) + 1
 cds <- multi_group_scoring(cds = cds,
                           gene_groups = gene_groups,
                           group_names = gene_groups)
 
 #Pull score names as set of columns
-score_names <- colnames(colData(cds))[-c(1:17,158)] #may need to be modified
+score_names <- colnames(colData(cds))[c(current_new_col:length(colnames(colData(cds))))] 
 mat_sci_scores <- avg_score_matrix(cds = cds,
                                    cell_group = "cluster",
                                    scores = score_names)
@@ -318,7 +316,7 @@ for (clust in clusters) {
 }
 
 #add maximal cell type as cell_type metadata column
-colData(cds)$cell_type <- cell_types
+colData(cds)$s1b_cell_type <- cell_types
 
 #Plot cluster cell types in UMAP
 simple_theme <-  theme(axis.title.x = element_blank(),
@@ -334,12 +332,12 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                                                    fill = NA)) 
 
 plt <- plot_cells(cds, 
-                  color_cells_by = "cell_type",
+                  color_cells_by = "s1b_cell_type",
                   show_trajectory_graph = FALSE,
                   group_label_size = 4,
                   rasterize = TRUE) + 
   simple_theme +
-  scale_color_manual(values = as.vector(ocean.phase(length(unique(colData(cds)$cell_type)))))
+  scale_color_manual(values = as.vector(ocean.phase(length(unique(colData(cds)$s1b_cell_type)))))
 
 save_dir <- "~/save_dir/" #different for each user
 ggsave(plt, filename = paste0(save_dir, "XuFigS1B_cell-types.png"),
