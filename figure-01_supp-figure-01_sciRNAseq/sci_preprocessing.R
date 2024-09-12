@@ -12,11 +12,8 @@ library(RCurl)
 
 #load the cell dataset object containing all data as provided by the Brotman
 #Baty Institute post-sequencing
-
-#Load the RDS file from github
-#cds <- getURL("https://raw.github.com/...")
-#cds <- readRDS(text = cds)
-cds <- readRDS("~/BBI-path/monocle3_cds/all_Human_cds.RDS")
+#Load the RDS file from Google Drive
+cds <- readRDS("~/RDS_objects/sci_cds_BBI.RDS") 
 
 #Create sample metadata column containing sample information (BBI sample codename)
 cells <- colnames(cds)
@@ -117,10 +114,6 @@ mito_genes <- c("ENSG00000198727","ENSG00000198695","ENSG00000198786",
 colData(cds)$n.mito <- Matrix::colSums(counts(cds[mito_genes]))
 cds$perc_mito_umi <- 100*(cds$n.mito / cds$n.umi)
 
-#Assess QC for dataset; previously generated plots can be found on github in the QC folder
-#qplot(log10(colData(cds)$n.umi), geom="density")
-#qplot(colData(cds)$perc_mito_umi, geom="density")
-
 #minimum n.umi cutoff was already set by the BBI to 100
 #maximum n.umi is 62698, which is reasonable so no upper limit of n.umi was set
 #only include cells that contain < 10% mitochondrial reads
@@ -131,6 +124,8 @@ cds <- reduce_dimension(cds)
 cds <- cluster_cells(cds, resolution = 1e-4)
 
 #Look at the distribution of cells within UMAP space
+#Note: one of the functions in Monocle has a random element, so it may look a
+#bit different than the publication if you run the above newly
 plot_cells(cds)
 plot_cells(cds, color_cells_by = "line", label_cell_groups = FALSE)
 plot_cells(cds, color_cells_by = "line_and_time.point", label_cell_groups = FALSE)
