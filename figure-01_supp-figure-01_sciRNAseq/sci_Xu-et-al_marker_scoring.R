@@ -190,15 +190,14 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                        axis.ticks = element_blank(),
                        axis.line.x = element_blank(),
                        axis.line.y = element_blank(), 
-                       panel.border = element_rect(color = "black", 
-                                                   linewidth = 2, 
-                                                   fill = NA)) 
+                       panel.border = element_blank()) 
 
 plt <- plot_cells(cds, 
                   color_cells_by = "s1a_cell_type",
                   show_trajectory_graph = FALSE,
                   group_label_size = 4,
-                  rasterize = TRUE) + 
+                  rasterize = TRUE,
+                  label_cell_groups = FALSE) + 
   simple_theme +
   scale_color_manual(values = as.vector(stepped(n=length(unique(colData(cds)$s1a_cell_type)))))
 
@@ -327,15 +326,14 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                        axis.ticks = element_blank(),
                        axis.line.x = element_blank(),
                        axis.line.y = element_blank(), 
-                       panel.border = element_rect(color = "black", 
-                                                   linewidth = 2, 
-                                                   fill = NA)) 
+                       panel.border = element_blank()) 
 
 plt <- plot_cells(cds, 
                   color_cells_by = "s1b_cell_type",
                   show_trajectory_graph = FALSE,
                   group_label_size = 4,
-                  rasterize = TRUE) + 
+                  rasterize = TRUE,
+                  label_cell_groups = TRUE) + 
   simple_theme +
   scale_color_manual(values = as.vector(ocean.phase(length(unique(colData(cds)$s1b_cell_type)))))
 

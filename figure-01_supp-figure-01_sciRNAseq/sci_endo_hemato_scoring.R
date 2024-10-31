@@ -21,9 +21,7 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                        axis.ticks = element_blank(),
                        axis.line.x = element_blank(),
                        axis.line.y = element_blank(), 
-                       panel.border = element_rect(color = "black", 
-                                                   linewidth = 2, 
-                                                   fill = NA)) 
+                       panel.border = element_blank()) 
 
 #function for aggregate gene scoring for a marker set
 gene_group_scoring <- function(cds, gene_group, column_name) {
@@ -178,6 +176,10 @@ ggsave(plot = combo_plt,
 
 #For hematopoietic-related cell populations only
 cds_hemato_only <- readRDS("~/sci_cds_BBI_preprocessed_hemato-only.RDS")
+
+colData(cds)$time.point <- dplyr::recode(colData(cds)$time.point, 
+                                         "Day 7" = "Day 07",
+                                         "Day 8" = "Day 08")
 
 d7 <- cds[,colData(cds)$time.point %in% c("Day 07") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]
 d8 <- cds[,colData(cds)$time.point %in% c("Day 08") & colData(cds)$cell %in% colData(cds_hemato_only)$cell]

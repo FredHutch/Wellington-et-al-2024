@@ -175,14 +175,17 @@ cds_hemato <- choose_cells(cds_scores) #upper populations
 cds_other <- choose_cells(cds_scores) #lower populations
 
 #Get score column names
-score_names <- names(cds_scores@colData)[-c(1:5)]
+score_names <- names(cds_scores@colData)[-c(1:4)]
+
+score_names_hemato <- score_names[c(1:7, 16:22)]
+score_names_other <- score_names[c(8:15, 23:27)]
 
 #Create heatmap matrix for hematopoietic-related populations
-mat_hemato <- avg_score_matrix(cds_hemato, "new_cluster", score_names)
+mat_hemato <- avg_score_matrix(cds_hemato, "new_cluster", score_names_hemato)
 mat_hemato <- mat_hemato[sort(rownames(mat_hemato)),]
 
 #Select hematopoietic-related score rownames and reformat them
-mat_hemato_rownames <- rownames(mat_hemato)[-c(3,5:6,8:9,16:17,19:20,23:25,27)]
+mat_hemato_rownames <- rownames(mat_hemato)
 new_hemato_rownames <- gsub("..", " ", mat_hemato_rownames, fixed = TRUE)
 new_hemato_rownames <- gsub(".", " ", new_hemato_rownames, fixed = TRUE)
 new_hemato_rownames <- gsub("Pre HE", "Pre-HE", new_hemato_rownames, fixed = TRUE)
@@ -192,11 +195,11 @@ new_hemato_rownames <- gsub("Calvanese", "(Calvanese)", new_hemato_rownames, fix
 new_hemato_rownames <- gsub("Zeng", "(Zeng)", new_hemato_rownames, fixed = TRUE)
 
 #Create heatmap matrix for contaminating populations
-mat_other <- avg_score_matrix(cds_other, "new_cluster", score_names)
+mat_other <- avg_score_matrix(cds_other, "new_cluster", score_names_other)
 mat_other <- mat_other[sort(rownames(mat_other)),]
 
 #Select non-hematopoietic-related score rownames and reformat them
-mat_other_rownames <- rownames(mat_other)[-c(1:2,4,7,10:15,18,21:22,26)]
+mat_other_rownames <- rownames(mat_other)
 new_other_rownames <- gsub("..", " ", mat_other_rownames, fixed = TRUE)
 new_other_rownames <- gsub(".", " ", new_other_rownames, fixed = TRUE)
 new_other_rownames <- gsub(" Score", "", new_other_rownames, fixed = TRUE)

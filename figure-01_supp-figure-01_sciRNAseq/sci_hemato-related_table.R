@@ -27,20 +27,20 @@ sci_d18_line2 <- ncol(cds[,colData(cds)$line_and_time.point == "MSC-iPS Day 18"]
 sci_d21_line2 <- ncol(cds[,colData(cds)$line_and_time.point == "MSC-iPS Day 21"])
 
 #Determine number of Hematopoietic-related cells on each day of differentiation for Line 1
-hemato_d7_line1 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "45-iPS Day 7"])
-hemato_d8_line1 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "45-iPS Day 8"])
-hemato_d11_line1 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "45-iPS Day 11"])
-hemato_d14_line1 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "45-iPS Day 14"])
-hemato_d18_line1 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "45-iPS Day 18"])
-hemato_d21_line1 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "45-iPS Day 21"])
+hemato_d7_line1 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "45-iPS Day 7"])
+hemato_d8_line1 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "45-iPS Day 8"])
+hemato_d11_line1 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "45-iPS Day 11"])
+hemato_d14_line1 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "45-iPS Day 14"])
+hemato_d18_line1 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "45-iPS Day 18"])
+hemato_d21_line1 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "45-iPS Day 21"])
 
 #Determine number of Hematopoietic-related cells on each day of differentiation for Line 2
-hemato_d7_line2 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "MSC-iPS Day 7"])
-hemato_d8_line2 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "MSC-iPS Day 8"])
-hemato_d11_line2 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "MSC-iPS Day 11"])
-hemato_d14_line2 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "MSC-iPS Day 14"])
-hemato_d18_line2 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "MSC-iPS Day 18"])
-hemato_d21_line2 <- ncol(sci_hemato[,colData(sci_hemato)$line_and_time.point == "MSC-iPS Day 21"])
+hemato_d7_line2 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "MSC-iPS Day 7"])
+hemato_d8_line2 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "MSC-iPS Day 8"])
+hemato_d11_line2 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "MSC-iPS Day 11"])
+hemato_d14_line2 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "MSC-iPS Day 14"])
+hemato_d18_line2 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "MSC-iPS Day 18"])
+hemato_d21_line2 <- ncol(cds_hemato_only[,colData(cds_hemato_only)$line_and_time.point == "MSC-iPS Day 21"])
 
 #Create vectors of calculated cell numbers separated by line and all or hematopoietic-related
 line1_days_all <- c(sci_d7_line1, sci_d8_line1, sci_d11_line1, sci_d14_line1, 
