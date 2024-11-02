@@ -210,10 +210,10 @@ new_other_rownames <- gsub("FBLN5", "FBLN5+", new_other_rownames, fixed = TRUE)
 new_other_rownames <- gsub("WT1", "WT1+", new_other_rownames, fixed = TRUE)
 
 #Create heatmap for identification of hematopoietic-related populations
-svg(filename = paste0(cds_save_directory, 
+pdf(file = paste0(cds_save_directory, 
                       "Hematopoeitic-Related_Score_Heatmap.svg"),
-    width = 10,
-    height = 10)
+    width = 25,
+    height = 25)
 my_pheatmap <- pheatmap(mat_hemato[mat_hemato_rownames,
                                    c(1:5, 7:12, 14, 16:22, 24:25, 
                                      "26a", "26b", 27:28)],
@@ -223,14 +223,14 @@ my_pheatmap <- pheatmap(mat_hemato[mat_hemato_rownames,
                         cluster_cols=F, 
                         cluster_rows = F,
                         cellheight = 10,
-                        cellwidth = 10,
+                        cellwidth = 20,
                         labels_row = new_hemato_rownames) 
 draw(my_pheatmap)
 dev.off()
 
 #Create heatmap for identification of other populations
-svg(filename = paste0(cds_save_directory, 
-                      "Other_Non-Hemato_Cells_Score_Heatmap.svg"),
+pdf(file = paste0(cds_save_directory, 
+                      "Other_Non-Hemato_Cells_Score_Heatmap.pdf"),
     width = 10,
     height = 10)
 my_pheatmap <- pheatmap(mat_other[mat_other_rownames,],
@@ -239,8 +239,8 @@ my_pheatmap <- pheatmap(mat_other[mat_other_rownames,],
                         show_colnames = T, 
                         cluster_cols=F, 
                         cluster_rows = F,
-                        cellheight = 10,
-                        cellwidth = 10,
+                        cellheight = 8,
+                        cellwidth = 20,
                         labels_row = new_other_rownames) 
 draw(my_pheatmap)
 dev.off()

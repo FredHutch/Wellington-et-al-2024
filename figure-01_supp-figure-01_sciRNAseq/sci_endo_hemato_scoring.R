@@ -104,8 +104,8 @@ he_or_hemato_plt <- plot_cells(cds,
   simple_theme
 
 #Label cell type calls in individual plots for each day of differentiation
-d7 <- cds[,colData(cds)$time.point %in% c("Day 07")]
-d8 <- cds[,colData(cds)$time.point %in% c("Day 08")]
+d7 <- cds[,colData(cds)$time.point %in% c("Day 7")]
+d8 <- cds[,colData(cds)$time.point %in% c("Day 8")]
 d11 <- cds[,colData(cds)$time.point %in% c("Day 11")]
 d14 <- cds[,colData(cds)$time.point %in% c("Day 14")]
 d18 <- cds[,colData(cds)$time.point %in% c("Day 18")]

@@ -8,6 +8,7 @@ library(stringr)
 library(ggplot2)
 library(patchwork)
 library(pals)
+library(cowplot)
 
 #Load Monocle integrated object; note that the Google Drive version already has 
 #these labels transferred
@@ -194,12 +195,25 @@ cds_calvlabels <- cds_copy[,!is.na(colData(cds_copy)$"calvanese_cell_types_compl
 #For iPS labels
 plt_ipslabels <- plot_cells(cds_ipslabels, 
                             color_cells_by = "ips_cell_type",
-                            cell_size = 1,
+                            cell_size = 0.8,
                             label_cell_groups = FALSE,
                             rasterize = TRUE,
                             show_trajectory_graph = FALSE) + 
   simple_theme +
   scale_color_manual(values = as.vector(glasbey(11)))
+ggsave(plot = plt_ipslabels + theme(legend.position = "none"), 
+       filename = paste0(save_dir, 
+                         "int_ips_labels.svg"), 
+       width = 7, 
+       height = 7)
+
+plt_ipslegend <- cowplot::get_legend(plt_ipslabels)
+svg(filename = paste0(save_dir, "int_ips_legend.svg"),
+    width = 4,
+    height = 4)
+grid.newpage()
+grid.draw(plt_ipslegend)
+dev.off()
 
 #For Zeng lables
 plt_zenglabels <- plot_cells(cds_zenglabels, 
@@ -210,6 +224,19 @@ plt_zenglabels <- plot_cells(cds_zenglabels,
                              show_trajectory_graph = FALSE) + 
   simple_theme +
   scale_color_manual(values = as.vector(glasbey(11)))
+ggsave(plot = plt_zenglabels + theme(legend.position = "none"), 
+       filename = paste0(save_dir, 
+                         "int_zeng_labels.svg"), 
+       width = 7, 
+       height = 7)
+
+plt_zenglegend <- cowplot::get_legend(plt_zenglabels)
+svg(filename = paste0(save_dir, "int_zeng_legend.svg"),
+    width = 4,
+    height = 4)
+grid.newpage()
+grid.draw(plt_zenglegend)
+dev.off()
 
 #For Calvanese labels (from Calvanese et al. Figure 1)
 plt_calvlabels <- plot_cells(cds_calvlabels, 
@@ -220,6 +247,19 @@ plt_calvlabels <- plot_cells(cds_calvlabels,
                              show_trajectory_graph = FALSE) + 
   simple_theme +
   scale_color_manual(values = as.vector(glasbey(6)))
+ggsave(plot = plt_calvlabels + theme(legend.position = "none"), 
+       filename = paste0(save_dir, 
+                         "int_calv_labels.svg"), 
+       width = 7, 
+       height = 7)
+
+plt_calvlegend <- cowplot::get_legend(plt_calvlabels)
+svg(filename = paste0(save_dir, "int_calv_legend.svg"),
+    width = 4,
+    height = 4)
+grid.newpage()
+grid.draw(plt_calvlegend)
+dev.off()
 
 #For Crosse labels (there were only labels for AoV, no AoMid)
 plt_crosselabels <- plot_cells(cds_crosselabels, 
@@ -229,7 +269,20 @@ plt_crosselabels <- plot_cells(cds_crosselabels,
                                rasterize = TRUE,
                                show_trajectory_graph = FALSE) + 
   simple_theme +
-  scale_color_manual(values = as.vector(glasbey(20))) 
+  scale_color_manual(values = as.vector(glasbey(20)))
+ggsave(plot = plt_crosselabels + theme(legend.position = "none"), 
+       filename = paste0(save_dir, 
+                         "int_crosse_labels.svg"), 
+       width = 7, 
+       height = 7)
+
+plt_crosselegend <- cowplot::get_legend(plt_crosselabels)
+svg(filename = paste0(save_dir, "int_crosse_legend.svg"),
+    width = 4,
+    height = 4)
+grid.newpage()
+grid.draw(plt_crosselegend)
+dev.off()
 
 #####To label single label transfer populations#####
 
@@ -303,9 +356,7 @@ simple_theme <-  theme(axis.title.x = element_blank(),
                        axis.ticks = element_blank(),
                        axis.line.x = element_blank(),
                        axis.line.y = element_blank(), 
-                       panel.border = element_rect(color = "black", 
-                                                   linewidth = 5, 
-                                                   fill = NA),
+                       panel.border = element_blank(),
                        plot.margin = grid::unit(c(0,0,0,0), "mm"),
                        legend.position = "none",
                        plot.background = element_rect(fill = "white", 
@@ -319,25 +370,25 @@ save_dir <- "~/save_dir/"
 #This plots TRUE cells on top of the FALSE cells so they are more visible
 for(cell_type_col in cell_type_cols) {
   plt <- ggplot() +
-    geom_point(data = int_all_colData[int_all_colData[,cell_type_col] == "FALSE",] ,
+    geom_point(data = cds_colData[cds_colData[,cell_type_col] == "FALSE",],
                aes(x = umap_1,
                    y = umap_2),
                color = "black",
                stroke = 0,
                size = 2) +
-    geom_point(data = int_all_colData[int_all_colData[,cell_type_col] == "FALSE",],
+    geom_point(data = cds_colData[cds_colData[,cell_type_col] == "FALSE",],
                aes(x = umap_1,
                    y = umap_2),
                color = "grey",
                stroke = 0,
                size = 1.9) +
-    geom_point(data = int_all_colData[int_all_colData[,cell_type_col] == "TRUE",],
+    geom_point(data = cds_colData[cds_colData[,cell_type_col] == "TRUE",],
                aes(x = umap_1,
                    y = umap_2),
                color = "black",
                stroke = 0,
                size = 2) +
-    geom_point(data = int_all_colData[int_all_colData[,cell_type_col] == "TRUE",],
+    geom_point(data = cds_colData[cds_colData[,cell_type_col] == "TRUE",],
                aes(x = umap_1,
                    y = umap_2,
                    color = get(cell_type_col)),
